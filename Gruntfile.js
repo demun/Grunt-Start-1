@@ -1,5 +1,4 @@
 module.exports = function (grunt) {
-// npm i -D grunt grunt-autoprefixer grunt-concurrent grunt-contrib-clean grunt-contrib-concat grunt-contrib-connect grunt-contrib-copy grunt-contrib-csslint grunt-contrib-cssmin grunt-contrib-imagemin grunt-contrib-jshint grunt-contrib-less grunt-contrib-uglify grunt-contrib-watch grunt-include-replace grunt-newer grunt-notify grunt-prettify grunt-usemin grunt-wiredep jshint-stylish load-grunt-tasks time-grunt 
 
     'use strict';
 
@@ -48,63 +47,16 @@ module.exports = function (grunt) {
                 // '!src/docs/include/**/*.html'
             ]
         },
-        
-        cssnext: {
-            options: {
-                sourcemap: true
-            },
-            dist: {
-                // src: 'src/css/cssnext/cssnext.css',
-                // dest: 'src/css/cssnext-result/cssnext.css'
 
-                expand: true,
-                cwd: 'src/css/cssnext',
-                src: ['*.css'],
-                dest: 'dest/css/cssnext',
-                ext: '.css'
-            }
-        },
-        // sass 를 css 로 변환합니다.
-        sass: {
-            options: {
-                // sourceMap: false,
-                // outFile: false,
-                outputStyle: 'expanded' // nested, expanded, compact, compressed
-            },
+        less: {
             dist: {
-                // src: 'src/sass/sass.{sass,scss}',
-                // dest: 'src/css/cssnext-result/cssnext.css'
-                expand: true,
-                cwd: 'src/sass/',
-                src: ['*.{sass,scss}'],
-                dest: 'dest/css/',
-                ext: '.css'
-            }
-        },
-        postcss: {
-            options: {
-                processors: [
-                    require('autoprefixer')({
-                        browsers: [
-                            'Android 2.3',
-                            'Android >= 4',
-                            'Chrome >= 20',
-                            'Firefox >= 24',
-                            'Explorer >= 8',
-                            'iOS >= 6',
-                            'Opera >= 12',
-                            'Safari >= 6'
-                        ]
-                    })
-                ]
+                options: {
+                    // banner: '<%= banner %>',
+                    dumpLineNumbers : 'comments'
+                },
+                src: 'src/less/style.less',
+                dest: 'dest/css/style.css'
             },
-            dist: {
-                expand: true,
-                cwd: 'dest/css',
-                src: ['*.css'],
-                dest: 'dest/css',
-                ext: '.css'
-            }
         },
         // css 구문검사를 합니다.
         csslint: {
@@ -150,13 +102,6 @@ module.exports = function (grunt) {
             }
         },
 
-        coffee: {
-            dist: {
-                src: 'src/coffee/test.coffee',
-                dest: 'src/js/coffee/test.js'
-            }
-        },
-
         // 자바스크립트 구문검사를 합니다.
         jshint: {
             options: {
@@ -169,30 +114,6 @@ module.exports = function (grunt) {
             },
             dist: {
                 src: 'src/js/site/*.js'
-            }
-        },
-
-        // js 를 검사합니다.
-        eslint: {
-            target: [
-                'Gruntfile.js',
-                'src/js/site/{,*/}*.js',
-                '!src/lib/*'
-            ]
-        },
-        // Compiles ES6 with Babel
-        babel: {
-            options: {
-                sourceMap: true
-            },
-            dist: {
-                files: [{
-                    expand: true,
-                    cwd: 'src/js/site/',
-                    src: '{,*/}*.js',
-                    dest: 'src/js/site/',
-                    ext: '.js'
-                }]
             }
         },
 
@@ -223,33 +144,18 @@ module.exports = function (grunt) {
             gruntfile: {
                 files: ['Gruntfile.js'],
                 tasks: ['jshint:grunt'],
-                options: {
-                    livereload: true
-                }
             },
             html: {
                 files: ['src/docs/**/*.html'],
                 tasks: ['includes','htmlhint'],
             },
-            cssnext: {
-                files: ['src/css/cssnext/cssnext.css'],
-                tasks: ['cssnext'],
-                
-            },
-            sass: {
-                files: ['src/sass/**/*.{scss,scss}'],
-                tasks: ['sass','postcss','csslint','csscomb','cssmin'],
-                
-            },
-            precss: {
-                files: ['src/css/precss/**/*.css'],
-                tasks: ['postcss:precss'],
-                
+            less: {
+                files: ['src/less/**/*.less'],
+                tasks: ['less','postcss','csslint','csscomb','cssmin'],
             },
             jsnt: {
                 files: ['src/js/**/*.js'],
                 tasks: ['jshint','concat','uglify'],
-                
             }
         },
         connect: {
@@ -290,15 +196,9 @@ module.exports = function (grunt) {
         ]
     );
 
-    grunt.registerTask('cssNext', [
-            'clean:cssnext',
-            'cssnext'
-        ]
-    );
-
     grunt.registerTask('css', [
             // 'clean',
-            'sass',
+            'less',
             'postcss',
             'csslint',
             'csscomb',
@@ -309,13 +209,6 @@ module.exports = function (grunt) {
     // javascript task
     grunt.registerTask('jsnt', [
             'jshint',
-            'concat',
-            'uglify'
-        ]
-    );
-    grunt.registerTask('esnt', [
-            'eslint',
-            'babel',
             'concat',
             'uglify'
         ]
