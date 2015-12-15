@@ -6,8 +6,7 @@ module.exports = function (grunt) {
     require('time-grunt')(grunt);
 
     // 자동으로 grunt 태스크를 로드합니다. grunt.loadNpmTasks 를 생략한다.
-    // require('load-grunt-tasks')(grunt);
-    require('jit-grunt')(grunt);
+    require('load-grunt-tasks')(grunt);
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
