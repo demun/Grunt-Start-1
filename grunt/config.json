@@ -1,0 +1,17 @@
+{
+	"less": {
+		"src": "src/less/*.less",
+		"dest": "dest/css/*.css"
+	},
+	"sass": {
+		"expand": "true",
+		"cwd": "src/sass",
+		"src": "['*.scss','*.sass']",
+		"dest": "dest/css",
+		"ext": ".css"
+	},
+	"css": {
+		"src": "src/css/*.css",
+		"dest": "dest/css/*.css"
+	}
+}

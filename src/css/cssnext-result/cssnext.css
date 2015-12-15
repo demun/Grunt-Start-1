@@ -1,0 +1,48 @@
+.box {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  border-radius: 10px;
+}
+
+body {
+  font-size: 13px;
+}
+
+body .testClass {
+  font-size: 19.5px;
+  user-select: none;
+}
+
+.textdiv {
+  width: 100px;
+  height: 100px;
+  background-color: red;
+  animation-name: example;
+  animation-duration: 4s;
+}
+
+/* The animation code */
+@keyframes example {
+  0% {
+    background-color: red;
+  }
+  25% {
+    background-color: yellow;
+  }
+  50% {
+    background-color: blue;
+  }
+  100% {
+    background-color: green;
+  }
+}
+
+/* The element to apply the animation to */
+div {
+  width: 100px;
+  height: 100px;
+  background-color: red;
+  animation-name: example;
+  animation-duration: 4s;
+}

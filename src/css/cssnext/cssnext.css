@@ -1,0 +1,8 @@
+:root {
+	--mainColor: red;
+}
+
+a {
+	color: var(--mainColor);
+	user-select: none;
+}
