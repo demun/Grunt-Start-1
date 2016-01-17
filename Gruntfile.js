@@ -11,15 +11,6 @@ module.exports = function (grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
-        clean: {
-            dist: {
-                files: [{
-                    dot: true,
-                    nonull: true,
-                    src: ['dest']
-                }]
-            },
-        },
 
         // html 에서 인클루드를 사용합니다.
         includes: {
@@ -42,17 +33,16 @@ module.exports = function (grunt) {
             },
             dist: [
                 'dest/**/*.html',
-                // 'src/docs/html/**/*.html',
-                // '!src/docs/include/**/*.html'
             ]
         },
 
         less: {
+            options: {
+                banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
+                '<%= grunt.template.today("yyyy-mm-dd") %> */',
+                dumpLineNumbers : 'comments' // 디버깅할때 사용
+            },
             dist: {
-                options: {
-                    // banner: '<%= banner %>',
-                    dumpLineNumbers : 'comments'
-                },
                 src: 'src/less/style.less',
                 dest: 'dest/css/style.css'
             },
@@ -63,11 +53,24 @@ module.exports = function (grunt) {
                 csslintrc: 'grunt/.csslintrc'
             },
             dist: {
-                expand: true,
-                cwd: 'dest/css',
-                src: ['*.css'],
-                dest: 'dest/css',
-                ext: '.css'
+                src: 'dest/css/*.css'
+            }
+        },
+        autoprefixer: {
+             options: {
+                browsers: [
+                    'Android 2.3',
+                    'Android >= 4',
+                    'Chrome >= 20',
+                    'Firefox >= 24', // Firefox 24 is the latest ESR
+                    'Explorer >= 8',
+                    'iOS >= 6',
+                    'Opera >= 12',
+                    'Safari >= 6'
+                ]
+            },
+            dist: {
+                src: 'dest/css/*.css'
             }
         },
         // css 의 속성을 정렬해줍니다.
@@ -77,10 +80,9 @@ module.exports = function (grunt) {
             },
             dist: {
                 expand: true,
-                cwd: 'dest/css',
-                src: ['*.css'],
-                dest: 'dest/css',
-                ext: '.css'
+                cwd: 'dest/css/',
+                src: ['*.css', '!*.min.css'],
+                dest: 'dest/css/'
             }
         },
         // css 를 압축합니다.
@@ -118,8 +120,9 @@ module.exports = function (grunt) {
 
         concat: {
             options: {
-                separator: ';'
-            //     banner: '<%= banner %>'
+                separator: ';',
+                banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
+                '<%= grunt.template.today("yyyy-mm-dd") %> */'
             },
             dist: {
                 src: 'src/js/site/*.js',
@@ -129,13 +132,58 @@ module.exports = function (grunt) {
 
         uglify: {
             options: {
-            //     banner: '<%= banner %>'
-            //     banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+                banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
+                '<%= grunt.template.today("yyyy-mm-dd") %> */'
             },
             dist: {
                 src: 'dest/js/site.js',
                 dest: 'dest/js/site.min.js'
             }
+        },
+
+        imagemin: {
+            dist: {
+                files: [{
+                    expand: true,
+                    cwd: 'src/images/',
+                    src: '**/*.{png,jpeg,jpg,gif}',
+                    dest: 'dest/images/'
+                }]
+            }
+        },
+        clean: {
+            dist: {
+                files: [{
+                    dot: true,
+                    nonull: true,
+                    src: [
+                        'dest'
+                    ]
+                }]
+            },
+        },
+        copy: {
+            dist: {
+                files: [ 
+                    // fonts
+                    // {
+                    //     expand: true,
+                    //     cwd: 'src/fonts/',
+                    //     src: '**',
+                    //     dest: 'dest/fonts/'
+                    // },
+                ]
+            }
+        },
+
+        concurrent: {
+            options: {
+                logConcurrentOutput: true
+            },
+            dist: [
+                'copy',
+                'imagemin'
+            ]
         },
 
         watch: {
@@ -150,11 +198,19 @@ module.exports = function (grunt) {
             },
             less: {
                 files: ['src/less/**/*.less'],
-                tasks: ['less','postcss','csslint','csscomb','cssmin'],
+                tasks: ['less','csslint','autoprefixer','csscomb','cssmin'],
             },
             jsnt: {
                 files: ['src/js/**/*.js'],
                 tasks: ['jshint','concat','uglify'],
+            },
+            img: {
+                files: ['src/images/**/*.{gif,jpeg,jpg,png}'],
+                tasks: ['newer:imagemin'],
+            },
+            fonts: {
+                files: ['src/fonts/**/*'],
+                tasks: ['newer:copy'],
             }
         },
         connect: {
@@ -169,6 +225,7 @@ module.exports = function (grunt) {
                 }
             }
         },
+
 
     });
 
@@ -195,11 +252,12 @@ module.exports = function (grunt) {
         ]
     );
 
+    // css task
     grunt.registerTask('css', [
             // 'clean',
             'less',
-            'postcss',
             'csslint',
+            'autoprefixer',
             'csscomb',
             'cssmin'
         ]
@@ -218,6 +276,7 @@ module.exports = function (grunt) {
         'html',
         'css',
         'jsnt',
+        'concurrent',
     ]);
 
 

@@ -9,28 +9,51 @@
 // layout
 .wrapper {
 	width: @wrapper-width;
-	margin: 30px auto;
+	margin: 0 auto;
+	.clearfix();
 }
 
+.header {
+	padding-top: 10px;
+	padding-bottom: 30px;
+	border-bottom: 1px solid #ccc;
+	background-color: #f1f1f1;
 
-// category1
-// page-01
+	ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		.clearfix();
 
-.user {
-	background: url('@{img-url}user.png') no-repeat;
-	width: 25px;
-	height: 32px;
-	display: inline-block;
+		li {
+			float: left;
+
+			a {
+				display: block;
+				float: left;
+				background-color: #333;
+				color: #fff;
+				padding: 10px 20px;
+
+				&:hover {
+					background-color: lighten(#333, 10%);
+				}
+			}
+		}
+	}
 }
-.download {
-	background: url('@{img-url}download.png') no-repeat;
-	width: 25px;
-	height: 32px;
-	display: inline-block;
-}
 
-
-// test
 .main {
-	background-color: #ddd;
+	h1 {
+		background: url('@{img-url}icon-arrow-right-black.gif') no-repeat left 19px;
+		padding-left: 10px;
+	}
 }
+
+.footer {
+	background-color: #333;
+	color: #fff;
+	padding-top: 10px;
+	padding-bottom: 30px;
+}
+
