@@ -208,10 +208,10 @@ module.exports = function (grunt) {
                 files: ['src/images/**/*.{gif,jpeg,jpg,png}'],
                 tasks: ['newer:imagemin'],
             },
-            fonts: {
-                files: ['src/fonts/**/*'],
-                tasks: ['newer:copy'],
-            }
+            // fonts: {
+            //     files: ['src/fonts/**/*'],
+            //     tasks: ['newer:copy'],
+            // }
         },
         connect: {
             server: {
