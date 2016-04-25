@@ -203,7 +203,7 @@ module.exports = function (grunt) {
                 files: ['src/less/**/*.less'],
                 tasks: ['less','csslint','autoprefixer','csscomb','cssmin'],
             },
-            jsnt: {
+            js: {
                 files: ['src/js/**/*.js'],
                 tasks: ['jshint','concat','uglify'],
             },
