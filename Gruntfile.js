@@ -118,6 +118,7 @@ module.exports = function (grunt) {
             }
         },
 
+        // 파일을 합칩니다.
         concat: {
             options: {
                 separator: ';',
@@ -130,6 +131,7 @@ module.exports = function (grunt) {
             }
         },
 
+        // 압축합니다.
         uglify: {
             options: {
                 banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
@@ -141,27 +143,16 @@ module.exports = function (grunt) {
             }
         },
 
-        imagemin: {
-            dist: {
-                files: [{
-                    expand: true,
-                    cwd: 'src/images/',
-                    src: '**/*.{png,jpeg,jpg,gif}',
-                    dest: 'dest/images/'
-                }]
-            }
-        },
+        // 폴더 및 파일을 삭제합니다.
         clean: {
             dist: {
                 files: [{
-                    dot: true,
-                    nonull: true,
-                    src: [
-                        'dest'
-                    ]
+                    src: 'dest'
                 }]
             },
         },
+
+        // 폴더 및 파일을 복사합니다.
         copy: {
             dist: {
                 files: [ 
@@ -173,6 +164,18 @@ module.exports = function (grunt) {
                     //     dest: 'dest/fonts/'
                     // },
                 ]
+            }
+        },
+
+        // 이미지를 최적화 합니다.
+        imagemin: {
+            dist: {
+                files: [{
+                    expand: true,
+                    cwd: 'src/images/',
+                    src: '**/*.{png,jpeg,jpg,gif}',
+                    dest: 'dest/images/'
+                }]
             }
         },
 
