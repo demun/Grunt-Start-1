@@ -236,15 +236,15 @@ module.exports = function (grunt) {
     // grunt.loadNpmTasks('grunt-contrib-jshint');
 
     grunt.registerTask('serve', function (target) {
-      if (target === 'dist') {
-          return grunt.task.run(['connect', 'watch']);
-      }
+        if (target === 'dist') {
+            return grunt.task.run(['connect', 'watch']);
+        }
 
-      grunt.task.run([
-        'default',
-        'connect',
-        'watch'
-      ]);
+        grunt.task.run([
+            'default',
+            'connect',
+            'watch'
+        ]);
 
     });
 
