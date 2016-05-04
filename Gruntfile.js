@@ -121,7 +121,7 @@ module.exports = function (grunt) {
         // 파일을 합칩니다.
         concat: {
             options: {
-                separator: ';',
+                
                 banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
                 '<%= grunt.template.today("yyyy-mm-dd") %> */'
             },
@@ -179,6 +179,7 @@ module.exports = function (grunt) {
             }
         },
 
+        // 병렬로 작업을 실행합니다.
         concurrent: {
             options: {
                 logConcurrentOutput: true
@@ -189,6 +190,7 @@ module.exports = function (grunt) {
             ]
         },
 
+        // 감시를 합니다.
         watch: {
             options: { livereload: true },
             gruntfile: {
@@ -216,6 +218,8 @@ module.exports = function (grunt) {
             //     tasks: ['newer:copy'],
             // }
         },
+
+        // 서버를 열어서 브라우져에서 확인합니다.
         connect: {
             server: {
                 options: {
