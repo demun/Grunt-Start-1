@@ -36,6 +36,7 @@ module.exports = function (grunt) {
             ]
         },
 
+        // CSS를 만듭니다.
         less: {
             options: {
                 banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
@@ -47,6 +48,7 @@ module.exports = function (grunt) {
                 dest: 'dest/css/style.css'
             },
         },
+
         // css 구문검사를 합니다.
         csslint: {
             options: {
@@ -56,6 +58,8 @@ module.exports = function (grunt) {
                 src: 'dest/css/*.css'
             }
         },
+
+        // 벤더프리픽스를 추가합니다.
         autoprefixer: {
              options: {
                 browsers: [
@@ -73,6 +77,7 @@ module.exports = function (grunt) {
                 src: 'dest/css/*.css'
             }
         },
+
         // css 의 속성을 정렬해줍니다.
         csscomb: {
             options: {
@@ -85,6 +90,7 @@ module.exports = function (grunt) {
                 dest: 'dest/css/'
             }
         },
+        
         // css 를 압축합니다.
         cssmin: {
             options: {
@@ -283,7 +289,7 @@ module.exports = function (grunt) {
         'html',
         'css',
         'jsnt',
-        'concurrent',
+        'concurrent'
     ]);
 
 
