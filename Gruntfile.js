@@ -26,6 +26,7 @@ module.exports = function (grunt) {
                 }
             }
         },
+        
         // html 구문검사를 합니다.
         htmlhint: {
             options: {
