@@ -37,7 +37,7 @@ module.exports = function (grunt) {
             ]
         },
 
-        // CSS를 만듭니다.
+        // CSS를 만듭니다.   
         less: {
             options: {
                 banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
